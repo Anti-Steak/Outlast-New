@@ -217,7 +217,7 @@ update
     vars.mapcomparison = current.map;
 
 	// for outlast to be able to not have it endlessly start if you're resetting from the start of the game
-	if ((current.isLoading == 1) && (current.map == "Admin_Gates") && (current.xcoord > -16422.94))
+	if ((current.isLoading == 1) && (current.map == "Admin_Gates") && (current.xcoord > -16422.93))
 	{
 		vars.Checker1 = 1;
 	}
@@ -238,7 +238,7 @@ update
         vars.endsplit = 1;
     }
     // outlast starter, ik it doesn't work if you start from new game
-    if ((vars.Checker1 == 1) && (current.xcoord > -16422.93) && (current.inControl == 1))
+    if ((vars.Checker1 == 1) && (current.xcoord > -16422.93) && (current.xcoord < -16200) && (current.inControl == 1))
     {
         vars.starter = 1;
     }

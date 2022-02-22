@@ -45,6 +45,8 @@ init {
 }
 
 startup {
+  vars.Stopwatch = new Stopwatch();
+  vars.DelayTime = 0.005;
   settings.Add("OL", true, "Outlast"); // Grouping all the Outlast splits together
   settings.Add("adminblock", true, "Admin Block", "OL"); // Each Chapter is related to one of these
   settings.Add("prisonblock", true, "Prison Block", "OL");
@@ -271,12 +273,10 @@ update {
   }
   // For outlast to end split
   if (Math.Abs(-4098.51 - current.ycoord) < 0.01 && (current.inControl == 0) && (vars.OnceFinalSplit != 1) && (current.map == "Lab_BigTowerDone")) {
-    System.Threading.Thread.Sleep(50);
     vars.endsplit = 1;
   }
   // For whistleblower to end split
   if ((Math.Abs(-550.00 - current.ycoord) < 0.01) && (current.inControl == 0) && (vars.OnceFinalSplit != 1) && (current.map == "AdminBlock_Start")) {
-    System.Threading.Thread.Sleep(100);
     vars.endsplit = 1;
   }
   // outlast starter, ik it doesn't work if you start from new game
@@ -314,8 +314,20 @@ split {
 
   if ((vars.endsplit == 1) && (vars.OnceFinalSplit == 0)) {
     vars.OnceFinalSplit = 1;
-    return true;
+    vars.Stopwatch.Start();
+    if(current.map == "AdminBlock_Start")
+      {
+        vars.DelayTime = 0.08;
+      } else
+        {
+          vars.DelayTime = 0.07;
+        }
   }
+  if (vars.Stopwatch.Elapsed.TotalSeconds >= vars.DelayTime)
+    {
+      vars.Stopwatch.Reset();
+      return true;
+    }
 }
 
 isLoading {

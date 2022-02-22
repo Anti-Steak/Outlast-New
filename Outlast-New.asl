@@ -230,7 +230,12 @@ startup {
       vars.Checker3 = false;
       if(vars.DefaultSplits.Contains(s.Item2))
         {
-          vars.Checker3 = true;
+          if (s.Item2 == "Male_Elevator" || s.Item2 == "Lab_BigRoom" || s.Item2 == "Lab_BigTower" || s.Item2 == "Building2_Floor1_5")
+            {
+              vars.Checker3 = false;
+            } else {
+                vars.Checker3 = true;
+            }
         } else {
             vars.Checker3 = false;
         }

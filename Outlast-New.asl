@@ -276,7 +276,8 @@ update {
     vars.endsplit = 1;
   }
   // For whistleblower to end split
-  if ((current.xcoord < -16380) && (current.inControl == 0) && (vars.OnceFinalSplit != 1) && (current.map == "AdminBlock_Start")) {
+  if ((Math.Abs(-550.00 - current.ycoord) < 0.01) && (current.inControl == 0) && (vars.OnceFinalSplit != 1) && (current.map == "AdminBlock_Start")) {
+    System.Threading.Thread.Sleep(100);
     vars.endsplit = 1;
   }
   // outlast starter, ik it doesn't work if you start from new game

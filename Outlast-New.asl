@@ -267,7 +267,7 @@ update {
     vars.Checker1 = 1;
   }
   // for WB
-  if ((vars.starter == 0) && (current.xcoord < 9550) && (current.map == "Hospital_Free") && (old.isLoading == 1)) {
+  if ((vars.starter == 0) && (current.xcoord < 9544) && (current.map == "Hospital_Free") && (old.isLoading == 1)) {
     vars.Checker2 = 1;
   }
   // For outlast to end split
@@ -285,7 +285,7 @@ update {
     vars.starter = 1;
   }
   // For whistleblower starter
-  if ((vars.Checker2 == 1) && (current.xcoord > 9550) && (current.inControl == 1)) {
+  if ((vars.Checker2 == 1) && (current.xcoord > 9543.71) && (current.inControl == 1)) {
     vars.starter = 1;
   }
 

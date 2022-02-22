@@ -5,7 +5,7 @@
                         Splitter and logical changes made by Kuno Demetries
                         End timing and 32bit implementation by Anti
                         Additional checkpoint settings by Anti and Alexis
-                        Any problems contact aiden#2345
+                        aiden#2345 on discord
 */
 state("OLGame", "Patch2, 64bit") {
   int isLoading: 0x01FFBCC8, 0x118; // Generic Loading string

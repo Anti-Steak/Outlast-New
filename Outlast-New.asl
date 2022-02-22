@@ -33,7 +33,8 @@ init {
   vars.mapcomparison = current.map; // For whatever reason map returns Null and livesplit likes to linger on it so this is the easiest fix without changing addresses for something minor
   vars.Checker1 = 0;
   vars.Checker2 = 0;
-
+  vars.Checker3 = false;
+  vars.DefaultSplits = "";
   // Checking the games memory size to determine version
   switch (modules.First().ModuleMemorySize) {
     case 35831808:
@@ -46,6 +47,8 @@ init {
 }
 
 startup {
+  vars.Checker3 = false;
+  vars.DefaultSplits = "Admin_MainHall Admin_SecurityRoom Prison_Start Prison_IsolationCells02_Soldier Sewer_start Sewer_FlushWater Sewer_WaterFlushed Sewer_Citern2 Male_Start Male_Torture Male_ElevatorDone Male_SprinklerOff Courtyard_Start Courtyard_Chapel Female_Start Female_2ndFloor Female_ChuteActivated Female_LostCam Female_FoundCam Revisit_Soldier1 Revisit_RH Revisit_3rdFloor Revisit_PriestDead Lab_Start Lab_Soldierdead Lab_BigRoomDone Lab_BigTowerMid Hospital_1stFloor_Lobby Hospital_1stFloor_Crema Hospital_2ndFloor_GazOff Courtyard1_Start Courtyard1_SecurityTower PrisonRevisit_Start PrisonRevisit_Chase Courtyard2_Start Courtyard2_ElectricityOff_2 Building2_Start Building2_Floor3_2 Building2_Torture Building2_Garden Building2_Floor1_5b MaleRevisit_Start AdminBlock_Start";
   settings.Add("OL", true, "Outlast"); // Grouping all the Outlast splits together
   settings.Add("adminblock", true, "Admin Block", "OL"); // Each Chapter is related to one of these
   settings.Add("prisonblock", true, "Prison Block", "OL");
@@ -104,8 +107,8 @@ startup {
       tB("maleward", "Male_Start", "Entering Male Ward"),
       tB("maleward", "Male_Chase", "Chase start"),
       tB("maleward", "Male_ChasePause", "Jumping the gap"),
-      tB("maleward", "Male_Torture", "Trager cutscene start"),
-      tB("maleward", "Male_TortureDone", "Trager cutscene end (lol)"),
+      tB("maleward", "Male_Torture", "Trager torture cutscene start"),
+      tB("maleward", "Male_TortureDone", "Trager torture cutscene end (lol)"),
       tB("maleward", "Male_surgeon", "Drop down from first vent after cutscene"),
       tB("maleward", "Male_GetTheKey", "Drop down from second vent after cutscene"),
       tB("maleward", "Male_GetTheKey2", "Found the key"),
@@ -222,7 +225,17 @@ startup {
       tB("exit", "MaleRevisit_Start", "Start of Exit"),
       tB("exit", "AdminBlock_Start", "Long hallway"),
     };
-  foreach(var s in sB) settings.Add(s.Item2, true, s.Item3, s.Item1);
+  foreach(var s in sB)
+    {
+      vars.Checker3 = false;
+      if(vars.DefaultSplits.Contains(s.Item2))
+        {
+          vars.Checker3 = true;
+        } else {
+            vars.Checker3 = false;
+        }
+      settings.Add(s.Item2, vars.Checker3, s.Item3, s.Item1);
+    }
 
   vars.onStart = (EventHandler)((s, e) => // thanks gelly for this, it's basically making sure it always clears the vars no matter how livesplit starts
     {

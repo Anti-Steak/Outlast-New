@@ -288,6 +288,21 @@ startup {
 
 update {
   vars.mapcomparison = current.map;
+  if((current.xcoord == -1279.998) && (current.zcoord == -40.000)) {
+    vars.Checker1 = 0;
+    vars.Checker2 = 0;
+    vars.Checker3 = 0;
+    vars.Checker4 = 0;
+    vars.Checker5 = 0;
+    vars.Checker6 = 0;
+    vars.Checker7 = 0;
+    vars.Checker8 = 0;
+    vars.Checker9 = 0;
+    vars.Checker10 = 0;
+    vars.Checker11 = 0;
+    vars.Checker12 = 0;
+    vars.Checker13 = 0;
+  }
 
   // for outlast to be able to not have it endlessly start if you're resetting from the start of the game
   if ((current.isLoading == 1) && (current.map == "Admin_Gates") && (current.xcoord < -16422.93)) {

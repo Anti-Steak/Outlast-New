@@ -76,7 +76,7 @@ startup {
   settings.Add("drying", true, "Drying Ground", "WB");
   settings.Add("vocation", true, "Vocational Block", "WB");
   settings.Add("exit", true, "Exit", "WB");
-  settings.Add("il", false, "Start timing for ILs (Do not turn on for full game runs!)");
+  settings.Add("il", false, "Start timing for ILs (Do not turn on for full game runs)");
   //zeko's Code, booleans added by anti
   var tB = (Func<string, string, string, bool, Tuple<string, string, string, bool>>) ((elmt1, elmt2, elmt3, elmt4) => { return Tuple.Create(elmt1, elmt2, elmt3, elmt4); });
      var sB = new List<Tuple<string, string, string, bool>>

@@ -3,7 +3,7 @@
                         Major credits to Gelly, AlexisDR and the main mods for stress testing
                         Original codes (isloading, xcord, ycord, zcord, incontrol) all found by MattMatt
                         Splitter and logical changes made by Kuno Demetries
-                        End timing and 32bit implementation by Anti
+                        End timing, IL timing and 32bit implementation by Anti
                         Additional checkpoint settings by Anti and Alexis
                         aiden#2345 on discord
 */
@@ -33,6 +33,18 @@ init {
   vars.mapcomparison = current.map; // For whatever reason map returns Null and livesplit likes to linger on it so this is the easiest fix without changing addresses for something minor
   vars.Checker1 = 0;
   vars.Checker2 = 0;
+  vars.Checker3 = 0;
+  vars.Checker4 = 0;
+  vars.Checker5 = 0;
+  vars.Checker6 = 0;
+  vars.Checker7 = 0;
+  vars.Checker8 = 0;
+  vars.Checker9 = 0;
+  vars.Checker10 = 0;
+  vars.Checker11 = 0;
+  vars.Checker12 = 0;
+  vars.Checker13 = 0;
+  vars.Running = 0;
   // Checking the games memory size to determine version
   switch (modules.First().ModuleMemorySize) {
     case 35831808:
@@ -64,6 +76,7 @@ startup {
   settings.Add("drying", true, "Drying Ground", "WB");
   settings.Add("vocation", true, "Vocational Block", "WB");
   settings.Add("exit", true, "Exit", "WB");
+  settings.Add("il", false, "Start timing for ILs (Do not turn on for full game runs!)");
   //zeko's Code, booleans added by anti
   var tB = (Func<string, string, string, bool, Tuple<string, string, string, bool>>) ((elmt1, elmt2, elmt3, elmt4) => { return Tuple.Create(elmt1, elmt2, elmt3, elmt4); });
      var sB = new List<Tuple<string, string, string, bool>>
@@ -241,6 +254,7 @@ startup {
   vars.onReset = (LiveSplit.Model.Input.EventHandlerT < LiveSplit.Model.TimerPhase > )((s, e) => {
     vars.doneMaps.Clear(); // Needed because checkpoints bad in game
     vars.OnceFinalSplit = 0; // So it doesn't split more than once for the end split
+    vars.Running = 0;
   });
   timer.OnReset += vars.onReset;
 
@@ -288,6 +302,117 @@ update {
     vars.starter = 1;
   }
 
+  // IL start
+  if ((settings[("il")]) && (vars.Running == 0)) {
+
+    //Prison
+    if ((current.isLoading == 1) && (current.map == "Prison_Start") && (current.xcoord > 3700)) {
+      vars.Checker1 = 1;
+    }
+    if((vars.Checker1 == 1) && (current.xcoord < 3700) && (current.isLoading == 0)) {
+     vars.starter = 1;
+    }
+
+    //Sewer
+    if ((current.isLoading == 1) && (current.map == "Sewer_start") && (current.zcoord < 1156.598)) {
+      vars.Checker3 = 1;
+    }
+    if((vars.Checker3 == 1) && (current.zcoord > 1156.598)) {
+     vars.starter = 1;
+     vars.Checker3 = 0;
+    }
+
+    //Male Ward
+    if ((current.isLoading == 1) && (current.map == "Male_Start") && (current.zcoord < -11844.80)) {
+      vars.Checker4 = 1;
+    }
+    if((vars.Checker4 == 1) && (current.zcoord > -11844.80)) {
+     vars.starter = 1;
+     vars.Checker4 = 0;
+    }
+
+    //Courtyard
+    if ((current.isLoading == 1) && (current.map == "Courtyard_Start") && (current.zcoord < -7064.90)) {
+      vars.Checker5 = 1;
+    }
+    if((vars.Checker5 == 1) && (current.zcoord > -7064.90)) {
+     vars.starter = 1;
+     vars.Checker5 = 0;
+    }
+
+    //Female Ward
+    if ((current.isLoading == 1) && (current.map == "Female_Start") && (current.zcoord < 7241.01)) {
+      vars.Checker6 = 1;
+    }
+    if((vars.Checker6 == 1) && (current.zcoord > 7241.01)) {
+     vars.starter = 1;
+     vars.Checker6 = 0;
+    }
+
+    //Return to Admin
+    if ((current.isLoading == 1) && (current.map == "Revisit_Soldier1") && (current.zcoord > 4951.99)) {
+      vars.Checker7 = 1;
+    }
+    if((vars.Checker7 == 1) && (current.zcoord < 4951.99)) {
+     vars.starter = 1;
+     vars.Checker7 = 0;
+    }
+
+    //Underground Lab
+    if ((current.isLoading == 1) && (current.map == "Lab_Start") && (current.xcoord > -6882.10)) {
+      vars.Checker8 = 1;
+    }
+    if((vars.Checker8 == 1) && (current.xcoord < -6882.10)) {
+     vars.starter = 1;
+     vars.Checker8 = 0;
+    }
+
+    //Recreation Area
+    if ((current.isLoading == 1) && (current.map == "Courtyard1_Start") && (current.xcoord > 5361.64)) {
+      vars.Checker9 = 1;
+    }
+    if((vars.Checker9 == 1) && (current.xcoord < 5361.64)) {
+     vars.starter = 1;
+     vars.Checker9 = 0;
+    }
+
+    //Return to Prison
+    if ((current.isLoading == 1) && (current.map == "PrisonRevisit_Start") && (current.zcoord > 4213.94)) {
+      vars.Checker10 = 1;
+    }
+    if((vars.Checker10 == 1) && (current.zcoord < 4213.94)) {
+     vars.starter = 1;
+     vars.Checker10 = 0;
+    }
+
+    //Drying Grounds
+    if ((current.isLoading == 1) && (current.map == "Courtyard2_Start") && (current.zcoord < -7400.87)) {
+      vars.Checker11 = 1;
+    }
+    if((vars.Checker11 == 1) && (current.zcoord > -7400.87)) {
+     vars.starter = 1;
+     vars.Checker11 = 0;
+    }
+
+    //Vocational Block
+    if ((current.isLoading == 1) && (current.map == "Building2_Start") && (current.xcoord < 6131.14)) {
+      vars.Checker12 = 1;
+    }
+    if((vars.Checker12 == 1) && (current.xcoord > 6131.14)) {
+     vars.starter = 1;
+     vars.Checker12 = 0;
+    }
+
+    //Exit
+    if ((current.isLoading == 1) && (current.map == "MaleRevisit_Start") && (current.xcoord > 288.67)) {
+      vars.Checker13 = 1;
+    }
+    if((vars.Checker13 == 1) && (current.xcoord < 288.67)) {
+     vars.starter = 1;
+     vars.Checker13 = 0;
+    }
+  }
+
   /*if ((vars.OnceFinalSplit != 1)) {
     print(current.ycoord.ToString());
   }*/
@@ -300,6 +425,7 @@ start {
     vars.OnceFinalSplit = 0;
     vars.Checker1 = 0;
     vars.Checker2 = 0;
+    vars.Running = 1;
     vars.doneMaps.Clear();
     vars.doneMaps.Add(current.map.ToString());
     return true;

@@ -302,6 +302,7 @@ update {
   // for WB
   if ((vars.starter == 0) /*&& (current.xcoord < 9544)*/ && (current.map == "Hospital_Free") && (old.isLoading == 1) && (vars.Running == 0)) {
     vars.cx = current.xcoord;
+    vars.cz = current.zcoord;
     vars.Checker2 = 1;
   }
   // For outlast to end split
@@ -318,6 +319,7 @@ update {
   }
   // For whistleblower starter
   if ((vars.Checker2 == 1) && (current.xcoord != vars.cx || current.zcoord != vars.cz) && (current.inControl == 1)) {
+    print("yo " + current.xcoord + " and " + current.zcoord);
     vars.starter = 1;
   }
 

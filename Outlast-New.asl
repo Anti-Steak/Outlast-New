@@ -112,7 +112,7 @@ startup {
       tB("sewers", "Sewer_WaterFlushed", "Turning 2nd valve", true),
       tB("sewers", "Sewer_Ladder", "After climbing 2nd ladder", false),
       tB("sewers", "Sewer_ToCitern", "After climbing down 3rd ladder", false),
-      tB("sewers", "Sewer_Citern1", "Before cistern", false),
+      tB("sewers", "Sewer_Citern1", "After crawling through pipe", false),
       tB("sewers", "Sewer_Citern2", "Before waterhops", true),
       tB("sewers", "Sewer_PostCitern", "After escaping Chris", false),
       tB("sewers", "Sewer_ToMaleWard", "After variant attack", false),

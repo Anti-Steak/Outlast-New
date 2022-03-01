@@ -3,7 +3,7 @@
                         Major credits to Gelly, AlexisDR and the main mods for stress testing
                         Original codes (isloading, xcord, ycord, zcord, incontrol) all found by MattMatt
                         Splitter and logical changes made by Kuno Demetries
-                        End timing and 32bit implementation by Anti
+                        IL timing, auto reset, start/end timing adjustments and 32bit implementation by Anti
                         Additional checkpoint settings by Anti and Alexis
                         aiden#2345 on discord
 */
@@ -44,6 +44,7 @@ init {
   vars.Checker11 = 0;
   vars.Checker12 = 0;
   vars.Checker13 = 0;
+  vars.Checker14 = 0;
   vars.Running = 0;
   vars.cz = 0;
   vars.cx = 0;
@@ -255,6 +256,7 @@ startup {
       vars.Checker11 = 0;
       vars.Checker12 = 0;
       vars.Checker13 = 0;
+      vars.Checker14 = 0;
       vars.starter = 0; // Generic starting split
       vars.endsplit = 0; // generic end split
       vars.OnceFinalSplit = 0; // So it doesn't split more than once for the end split
@@ -292,6 +294,23 @@ startup {
 
 update {
   vars.mapcomparison = current.map;
+  if ((vars.Running == 0) && (current.zcoord.ToString("0.00") == "-40.00") && (current.ycoord.ToString("0.00") == "80.00")) //main menu
+    {
+      vars.Checker1 = 0;
+      vars.Checker2 = 0;
+      vars.Checker3 = 0;
+      vars.Checker4 = 0;
+      vars.Checker5 = 0;
+      vars.Checker6 = 0;
+      vars.Checker7 = 0;
+      vars.Checker8 = 0;
+      vars.Checker9 = 0;
+      vars.Checker10 = 0;
+      vars.Checker11 = 0;
+      vars.Checker12 = 0;
+      vars.Checker13 = 0;
+      vars.Checker14 = 0;
+    }
 
   // for outlast to be able to not have it endlessly start if you're resetting from the start of the game
   if ((current.isLoading == 1) && (current.map == "Admin_Gates") && (vars.Running == 0) /*&& (current.xcoord < -16422.93)*/) {
@@ -327,9 +346,9 @@ update {
 
     //Prison
     if ((current.isLoading == 1) && (current.map == "Prison_Start") && (current.xcoord > 3700)) {
-      vars.Checker1 = 1;
+      vars.Checker14 = 1;
     }
-    if((vars.Checker1 == 1) && (current.xcoord < 3700) && (current.isLoading == 0) && (current.map == "Prison_Start")) {
+    if((vars.Checker14 == 1) && (current.xcoord < 3700) && (current.isLoading == 0) && (current.map == "Prison_Start")) {
      vars.starter = 1;
     }
 

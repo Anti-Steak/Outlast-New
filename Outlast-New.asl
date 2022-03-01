@@ -45,6 +45,8 @@ init {
   vars.Checker12 = 0;
   vars.Checker13 = 0;
   vars.Running = 0;
+  vars.cz = 0;
+  vars.cx = 0;
   // Checking the games memory size to determine version
   switch (modules.First().ModuleMemorySize) {
     case 35831808:
@@ -259,6 +261,8 @@ startup {
       vars.doneMaps.Clear(); // Needed because checkpoints bad in game
       vars.doneMaps.Add(current.map.ToString()); // Adding for the starting map because it's also bad
       vars.Running = 1;
+      vars.cz = 0;
+      vars.cx = 0;
     });
   // subsequently fixed issues with certain splits as well, so double bonus points
   timer.OnStart += vars.onStart;
@@ -290,11 +294,14 @@ update {
   vars.mapcomparison = current.map;
 
   // for outlast to be able to not have it endlessly start if you're resetting from the start of the game
-  if ((current.isLoading == 1) && (current.map == "Admin_Gates") && (current.xcoord < -16422.93)) {
+  if ((current.isLoading == 1) && (current.map == "Admin_Gates") && (vars.Running == 0) /*&& (current.xcoord < -16422.93)*/) {
+    vars.cx = current.xcoord;
+    vars.cz = current.zcoord;
     vars.Checker1 = 1;
   }
   // for WB
-  if ((vars.starter == 0) && (current.xcoord < 9544) && (current.map == "Hospital_Free") && (old.isLoading == 1)) {
+  if ((vars.starter == 0) /*&& (current.xcoord < 9544)*/ && (current.map == "Hospital_Free") && (old.isLoading == 1) && (vars.Running == 0)) {
+    vars.cx = current.xcoord;
     vars.Checker2 = 1;
   }
   // For outlast to end split
@@ -306,11 +313,11 @@ update {
     vars.endsplit = 1;
   }
   // outlast starter, ik it doesn't work if you start from new game
-  if ((vars.Checker1 == 1) && (current.xcoord > -16422.93) && (current.inControl == 1)) {
+  if ((vars.Checker1 == 1) && (current.xcoord != vars.cx || current.zcoord != vars.cz) && (current.inControl == 1)) {
     vars.starter = 1;
   }
   // For whistleblower starter
-  if ((vars.Checker2 == 1) && (current.xcoord > 9543.71) && (current.inControl == 1)) {
+  if ((vars.Checker2 == 1) && (current.xcoord != vars.cx || current.zcoord != vars.cz) && (current.inControl == 1)) {
     vars.starter = 1;
   }
 
@@ -326,100 +333,111 @@ update {
     }
 
     //Sewer
-    if ((current.isLoading == 1) && (current.map == "Sewer_start") && (current.zcoord < 1156.598)) {
+    if ((current.isLoading == 1) && (current.map == "Sewer_start")) {
+      vars.cz = current.zcoord;
       vars.Checker3 = 1;
     }
-    if((vars.Checker3 == 1) && (current.zcoord > 1156.598) && (current.map == "Sewer_start")) {
+    if((vars.Checker3 == 1) && (current.zcoord != vars.cz) && (current.map == "Sewer_start")) {
      vars.starter = 1;
      vars.Checker3 = 0;
     }
 
     //Male Ward
-    if ((current.isLoading == 1) && (current.map == "Male_Start") && (current.zcoord < -11844.80)) {
+    if ((current.isLoading == 1) && (current.map == "Male_Start")) {
+      vars.cz = current.zcoord;
       vars.Checker4 = 1;
     }
-    if((vars.Checker4 == 1) && (current.zcoord > -11844.80) && (current.map == "Male_Start")) {
+    if((vars.Checker4 == 1) && (current.zcoord != vars.cz) && (current.map == "Male_Start")) {
      vars.starter = 1;
      vars.Checker4 = 0;
     }
 
     //Courtyard
-    if ((current.isLoading == 1) && (current.map == "Courtyard_Start") && (current.zcoord < -7064.90)) {
+    if ((current.isLoading == 1) && (current.map == "Courtyard_Start")) {
+      vars.cz = current.zcoord;
       vars.Checker5 = 1;
     }
-    if((vars.Checker5 == 1) && (current.zcoord > -7064.90) && (current.map == "Courtyard_Start")) {
+    if((vars.Checker5 == 1) && (current.zcoord != vars.cz) && (current.map == "Courtyard_Start")) {
      vars.starter = 1;
      vars.Checker5 = 0;
     }
 
     //Female Ward
-    if ((current.isLoading == 1) && (current.map == "Female_Start") && (current.zcoord < 7241.01)) {
+    if ((current.isLoading == 1) && (current.map == "Female_Start")) {
+      vars.cz = current.zcoord;
       vars.Checker6 = 1;
     }
-    if((vars.Checker6 == 1) && (current.zcoord > 7241.01) && (current.map == "Female_Start")) {
+    if((vars.Checker6 == 1) && (current.zcoord != vars.cz) && (current.map == "Female_Start")) {
      vars.starter = 1;
      vars.Checker6 = 0;
     }
 
     //Return to Admin
-    if ((current.isLoading == 1) && (current.map == "Revisit_Soldier1") && (current.zcoord > 4951.99)) {
+    if ((current.isLoading == 1) && (current.map == "Revisit_Soldier1")) {
+      vars.cz = current.zcoord;
       vars.Checker7 = 1;
     }
-    if((vars.Checker7 == 1) && (current.zcoord < 4951.99) && (current.map == "Revisit_Soldier1")) {
+    if((vars.Checker7 == 1) && (current.zcoord != vars.cz) && (current.map == "Revisit_Soldier1")) {
      vars.starter = 1;
      vars.Checker7 = 0;
     }
 
     //Underground Lab
-    if ((current.isLoading == 1) && (current.map == "Lab_Start") && (current.xcoord > -6882.10)) {
+    if ((current.isLoading == 1) && (current.map == "Lab_Start")) {
+      vars.cx = current.xcoord;
       vars.Checker8 = 1;
     }
-    if((vars.Checker8 == 1) && (current.xcoord < -6882.10) && (current.map == "Lab_Start")) {
+    if((vars.Checker8 == 1) && (current.xcoord != vars.cx) && (current.map == "Lab_Start")) {
      vars.starter = 1;
      vars.Checker8 = 0;
     }
 
     //Recreation Area
-    if ((current.isLoading == 1) && (current.map == "Courtyard1_Start") && (current.xcoord > 5361.64)) {
+    if ((current.isLoading == 1) && (current.map == "Courtyard1_Start")) {
+      vars.cx = current.xcoord;
       vars.Checker9 = 1;
     }
-    if((vars.Checker9 == 1) && (current.xcoord < 5361.64) && (current.map == "Courtyard1_Start")) {
+    if((vars.Checker9 == 1) && (current.xcoord != vars.cx) && (current.map == "Courtyard1_Start")) {
      vars.starter = 1;
      vars.Checker9 = 0;
     }
 
     //Return to Prison
-    if ((current.isLoading == 1) && (current.map == "PrisonRevisit_Start") && (current.zcoord > 4213.94)) {
+    if ((current.isLoading == 1) && (current.map == "PrisonRevisit_Start")) {
+      vars.cz = current.zcoord;
       vars.Checker10 = 1;
     }
-    if((vars.Checker10 == 1) && (current.zcoord < 4213.94) && (current.map == "PrisonRevisit_Start")) {
+    if((vars.Checker10 == 1) && (current.zcoord != vars.cz) && (current.map == "PrisonRevisit_Start")) {
      vars.starter = 1;
      vars.Checker10 = 0;
     }
 
     //Drying Grounds
-    if ((current.isLoading == 1) && (current.map == "Courtyard2_Start") && (current.zcoord < -7400.87)) {
+    if ((current.isLoading == 1) && (current.map == "Courtyard2_Start")) {
+      vars.cz = current.zcoord;
       vars.Checker11 = 1;
     }
-    if((vars.Checker11 == 1) && (current.zcoord > -7400.87) && (current.map == "Courtyard2_Start")) {
+    if((vars.Checker11 == 1) && (current.zcoord != vars.cz) && (current.map == "Courtyard2_Start")) {
      vars.starter = 1;
      vars.Checker11 = 0;
     }
 
     //Vocational Block
-    if ((current.isLoading == 1) && (current.map == "Building2_Start") && (current.xcoord < 6131.14)) {
+    if ((current.isLoading == 1) && (current.map == "Building2_Start")) {
+      vars.cx = current.xcoord;
       vars.Checker12 = 1;
     }
-    if((vars.Checker12 == 1) && (current.xcoord > 6131.14) && (current.map == "Building2_Start")) {
+    if((vars.Checker12 == 1) && (current.xcoord != vars.cx) && (current.map == "Building2_Start")) {
      vars.starter = 1;
      vars.Checker12 = 0;
     }
 
     //Exit
-    if ((current.isLoading == 1) && (current.map == "MaleRevisit_Start") && (current.xcoord > 288.67)) {
+    if ((current.isLoading == 1) && (current.map == "MaleRevisit_Start")) {
+      vars.cx = current.xcoord;
       vars.Checker13 = 1;
     }
-    if((vars.Checker13 == 1) && (current.xcoord < 288.67) && (current.map == "MaleRevisit_Start")) {
+    if((vars.Checker13 == 1) && (current.xcoord != vars.cx) && (current.map == "MaleRevisit_Start")) {
      vars.starter = 1;
      vars.Checker13 = 0;
     }
@@ -463,6 +481,13 @@ split {
   if (vars.Stopwatch.Elapsed.TotalSeconds >= vars.DelayTime)
     {
       vars.Stopwatch.Reset();
+      return true;
+    }
+}
+
+reset {
+  if((current.isLoading == 1) && (current.map == "Admin_Gates" || current.map == "Hospital_Free"))
+    {
       return true;
     }
 }

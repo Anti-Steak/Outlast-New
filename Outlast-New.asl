@@ -3,7 +3,7 @@
                         Major credits to Gelly, AlexisDR and the main mods for stress testing
                         Original codes (isloading, xcord, ycord, zcord, incontrol) all found by MattMatt
                         Splitter and logical changes made by Kuno Demetries
-                        End timing and 32bit implementation by Anti
+                        End timing, auto reset, start changes, IL timing and 32bit implementation by Anti
                         Additional checkpoint settings by Anti and Alexis
                         aiden#2345 on discord
 */

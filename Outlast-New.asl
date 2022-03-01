@@ -314,12 +314,11 @@ update {
     vars.endsplit = 1;
   }
   // outlast starter, ik it doesn't work if you start from new game
-  if ((vars.Checker1 == 1) && (current.xcoord != vars.cx || current.zcoord != vars.cz) && (current.inControl == 1)) {
+  if ((vars.Checker1 == 1) && (current.xcoord != vars.cx || current.zcoord != vars.cz)) {
     vars.starter = 1;
   }
   // For whistleblower starter
-  if ((vars.Checker2 == 1) && (current.xcoord != vars.cx || current.zcoord != vars.cz) && (current.inControl == 1)) {
-    print("yo " + current.xcoord + " and " + current.zcoord);
+  if ((vars.Checker2 == 1) && (current.xcoord != vars.cx || current.zcoord != vars.cz)) {
     vars.starter = 1;
   }
 

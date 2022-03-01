@@ -106,6 +106,7 @@ startup {
       tB("prisonblock", "Prison_IsolationCells02_PostSoldier", "Escaped Chris", false),
       tB("prisonblock", "Prison_OldCells_PreStruggle", "Before variant jumps onto you", false),
       tB("prisonblock", "Prison_OldCells_PreStruggle2", "Before variant grabs you through bars", false),
+      tB("prisonblock", "Prison_Showers_Exit", "Before leaving through showers", false),
       tB("sewers", "Sewer_start", "Entering Sewers", true),
       tB("sewers", "Sewer_FlushWater", "Before Flushing Water", true),
       tB("sewers", "Sewer_WaterFlushed", "Turning 2nd valve", true),

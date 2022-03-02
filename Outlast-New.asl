@@ -7,21 +7,21 @@
                         Additional checkpoint settings by Anti and Alexis
                         aiden#2345 on discord
 */
-state("OLGame", "64bit") {
+state("OLGame", "Patch2, 64bit") {
   bool isLoading: 0x01FFBCC8, 0x118; // Generic Loading string
   float xcoord: 0x02020F38, 0x278, 0x40, 0x454, 0x80;
   float zcoord: 0x2020F38, 0x278, 0x40, 0x454, 0x84;
   float ycoord: 0x2020F38, 0x278, 0x40, 0x454, 0x88;
-  string100 map: 0x02006F00, 0x6F4, 0x40, 0xAB4, 0x80, 0x0; // Current Checkpoint
+  string50 map: 0x02006F00, 0x6F4, 0x40, 0xAB4, 0x80, 0x0; // Current Checkpoint
   bool inControl: 0x02020F38, 0x248, 0x60, 0x30, 0x278, 0x54; // In control == 1
 }
 
-state("OLGame", "32bit") {
+state("OLGame", "Patch2, 32bit") {
   bool isLoading: "OLGame.exe", 0x017E5B30, 0xD8;
   float xcoord: "OLGame.exe", 0x017E7764, 0x1D4, 0x38C, 0x78, 0x4, 0x50;
   float zcoord: "OLGame.exe", 0x017E7764, 0x1D4, 0x38C, 0x78, 0x4, 0x54;
   float ycoord: "OLGame.exe", 0x017E7764, 0x1D4, 0x38C, 0x78, 0x4, 0x58;
-  string100 map: "OLGame.exe", 0x0178C598, 0x7D4, 0x58, 0x0;
+  string50 map: "OLGame.exe", 0x0178C598, 0x7D4, 0x58, 0x0;
   bool inControl: "OLGame.exe", 0x017E7764, 0x1D4, 0x38C, 0x1F4, 0x68, 0x60;
 }
 
@@ -41,10 +41,10 @@ init {
   // Checking the games memory size to determine version
   switch (modules.First().ModuleMemorySize) {
     case 35831808:
-      version = "64bit";
+      version = "Patch2, 64bit";
       break;
     case 27406336:
-      version = "32bit";
+      version = "Patch2, 32bit";
       break;
   }
 
@@ -271,10 +271,11 @@ startup {
 
 update {
   vars.mapcomparison = current.map;
-  if ((current.zcoord.ToString("0.00") != "-40.00") && (current.ycoord.ToString("0.00") != "80.00")) {
+  //coordinates are always -40 something and 80 something when in main menu on 64bit version's addresses, but on 32bit they are null
+  if ((current.zcoord.ToString("0.00") != "-40.00" && current.ycoord.ToString("0.00") != "80.00") && (current.zcoord.ToString() != "0" && current.ycoord.ToString() != "0")) {
 
     // for outlast to be able to not have it endlessly start if you're resetting from the start of the game
-    if ((current.isLoading) && (current.map == "Admin_Gates") && (!vars.Running) /*&& (current.xcoord < -16422.93)*/ ) {
+    if ((current.isLoading) && (current.map == "Admin_Gates") && (!vars.Running)) {
       vars.cx = current.xcoord;
       vars.cz = current.zcoord;
       vars.Checker1 = true;

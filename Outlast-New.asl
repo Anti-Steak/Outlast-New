@@ -367,7 +367,7 @@ split {
     vars.OnceFinalSplit = true;
     vars.Stopwatch.Start();
     if (current.map == "AdminBlock_Start") {
-      vars.DelayTime = 0.08;
+      vars.DelayTime = 0.10;
     } else {
       vars.DelayTime = 0.07;
     }

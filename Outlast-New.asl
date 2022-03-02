@@ -88,6 +88,7 @@ startup {
   settings.Add("drying", true, "Drying Ground", "WB");
   settings.Add("vocation", true, "Vocational Block", "WB");
   settings.Add("exit", true, "Exit", "WB");
+
   settings.Add("il", false, "Start timing for ILs (Do not turn on for full game runs!)");
 
   //zeko's Code, booleans added by anti

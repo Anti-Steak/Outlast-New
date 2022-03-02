@@ -28,8 +28,8 @@ state("OLGame", "Patch2, 32bit") {
 init {
   vars.doneMaps = new List < string > (); // Test to see if we split for a setting already
   vars.starter = false; // Used for the starting check just so everything can just stay in Update
-  vars.endsplit = 0; // Used to do the final split
-  vars.OnceFinalSplit = 0; // After the game finishes the end split returns true so Kuno added this to make it split once
+  vars.endsplit = false; // Used to do the final split
+  vars.OnceFinalSplit = false; // After the game finishes the end split returns true so Kuno added this to make it split once
   vars.mapcomparison = current.map; // For whatever reason map returns Null and livesplit likes to linger on it so this is the easiest fix without changing addresses for something minor
   vars.Checker1 = false;
   vars.Checker2 = false;
@@ -289,12 +289,12 @@ update {
     }
 
     // For outlast to end split
-    if (Math.Abs(-4098.51 - current.ycoord) < 0.01 && (!current.inControl) && (vars.OnceFinalSplit != 1) && (current.map == "Lab_BigTowerDone")) {
-      vars.endsplit = 1;
+    if (Math.Abs(-4098.51 - current.ycoord) < 0.01 && (!current.inControl) && (!vars.OnceFinalSplit) && (current.map == "Lab_BigTowerDone")) {
+      vars.endsplit = true;
     }
     // For whistleblower to end split
-    if ((Math.Abs(-550.00 - current.ycoord) < 0.01) && (!current.inControl) && (vars.OnceFinalSplit != 1) && (current.map == "AdminBlock_Start")) {
-      vars.endsplit = 1;
+    if ((Math.Abs(-550.00 - current.ycoord) < 0.01) && (!current.inControl) && (!vars.OnceFinalSplit) && (current.map == "AdminBlock_Start")) {
+      vars.endsplit = true;
     }
 
     // outlast starter, ik it doesn't work if you start from new game
@@ -347,8 +347,8 @@ onStart {
   vars.Checker1 = false;
   vars.Checker2 = false;
   vars.starter = false; // Generic starting split
-  vars.endsplit = 0; // generic end split
-  vars.OnceFinalSplit = 0; // So it doesn't split more than once for the end split
+  vars.endsplit = false; // generic end split
+  vars.OnceFinalSplit = false; // So it doesn't split more than once for the end split
   vars.doneMaps.Clear(); // Needed because checkpoints bad in game
   vars.doneMaps.Add(current.map.ToString()); // Adding for the starting map because it's also bad
   vars.Running = true;
@@ -363,8 +363,8 @@ split {
     return true;
   }
 
-  if ((vars.endsplit == 1) && (vars.OnceFinalSplit == 0)) {
-    vars.OnceFinalSplit = 1;
+  if ((vars.endsplit) && (!vars.OnceFinalSplit)) {
+    vars.OnceFinalSplit = true;
     vars.Stopwatch.Start();
     if (current.map == "AdminBlock_Start") {
       vars.DelayTime = 0.08;
@@ -382,7 +382,7 @@ split {
 reset {
   if ((current.isLoading) && (current.map == "Admin_Gates" || current.map == "Hospital_Free")) {
     vars.doneMaps.Clear(); // Needed because checkpoints bad in game
-    vars.OnceFinalSplit = 0; // So it doesn't split more than once for the end split
+    vars.OnceFinalSplit = false; // So it doesn't split more than once for the end split
     vars.Running = false;
     return true;
   }
@@ -390,7 +390,7 @@ reset {
   if (settings[("il")]) {
     if ((current.isLoading) && (vars.ILStartingListZ.Contains(current.map) || (vars.ILStartingListX.Contains(current.map)))) {
       vars.doneMaps.Clear(); // Needed because checkpoints bad in game
-      vars.OnceFinalSplit = 0; // So it doesn't split more than once for the end split
+      vars.OnceFinalSplit = false; // So it doesn't split more than once for the end split
       vars.Running = false;
       return true;
     }
@@ -399,7 +399,7 @@ reset {
 
 onReset {
   vars.doneMaps.Clear(); // Needed because checkpoints bad in game
-  vars.OnceFinalSplit = 0; // So it doesn't split more than once for the end split
+  vars.OnceFinalSplit = false; // So it doesn't split more than once for the end split
   vars.Running = false;
   vars.currentIL = "";
 }

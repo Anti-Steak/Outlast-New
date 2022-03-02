@@ -7,7 +7,7 @@
                         Additional checkpoint settings by Anti and Alexis
                         aiden#2345 on discord
 */
-state("OLGame", "Patch2, 64bit") {
+state("OLGame", "64bit") {
   bool isLoading: 0x01FFBCC8, 0x118; // Generic Loading string
   float xcoord: 0x02020F38, 0x278, 0x40, 0x454, 0x80;
   float zcoord: 0x2020F38, 0x278, 0x40, 0x454, 0x84;
@@ -16,7 +16,7 @@ state("OLGame", "Patch2, 64bit") {
   bool inControl: 0x02020F38, 0x248, 0x60, 0x30, 0x278, 0x54; // In control == 1
 }
 
-state("OLGame", "Patch2, 32bit") {
+state("OLGame", "32bit") {
   bool isLoading: "OLGame.exe", 0x017E5B30, 0xD8;
   float xcoord: "OLGame.exe", 0x017E7764, 0x1D4, 0x38C, 0x78, 0x4, 0x50;
   float zcoord: "OLGame.exe", 0x017E7764, 0x1D4, 0x38C, 0x78, 0x4, 0x54;
@@ -41,10 +41,10 @@ init {
   // Checking the games memory size to determine version
   switch (modules.First().ModuleMemorySize) {
     case 35831808:
-      version = "Patch2, 64bit";
+      version = "64bit";
       break;
     case 27406336:
-      version = "Patch2, 32bit";
+      version = "32bit";
       break;
   }
 
